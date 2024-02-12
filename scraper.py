@@ -28,7 +28,7 @@ class RedditJokesParse:
             page.goto('https://www.reddit.com/r/Jokes/')
 
             _prev_height = -1
-            _max_scrolls = 100
+            _max_scrolls = 1
             _scroll_count = 0
             while _scroll_count < _max_scrolls:
                 if _scroll_count % 10 == 0:
@@ -51,7 +51,7 @@ class RedditJokesParse:
                 text = joke.query_selector('//div[@data-post-click-location="text-body"]') \
                     .inner_text()
                 rating = joke.query_selector('faceplate-number').inner_text()
-                public_date = datetime.fromisoformat(joke.query_selector('time').get_attribute('datetime'))
+                public_date = datetime.fromisoformat(joke.query_selector('time').get_attribute('datetime')[:-1])
                 public_date = public_date.strftime('%Y-%m-%d %H:%M:%S')
                 self.data.append([link, title, text, rating, public_date])
 
